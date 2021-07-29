@@ -9,10 +9,12 @@ import CalendrViewDatIcon from '@material-ui/icons/CalendarViewDay'
 import Post from './Post'
 import {db} from '../../firebase';
 import firebase from 'firebase';
-import { Input } from '@material-ui/icons'
+import {useSelector} from 'react-redux';
+import {selectUser} from '../../features/counter/userSlice'
 
 
 function Feed() {
+    const user = useSelector(selectUser)
     const [posts, setPosts] = useState([]);
     const [input, setInput] = useState('');
     /* create collection posts, and set the data */
@@ -35,10 +37,10 @@ function Feed() {
         e.preventDefault();
         /* starting stock the database to firebase */
         db.collection('posts').add({
-            name:"racle",
-            description:"this is a test",
+            name:user.displayName,
+            description:user.email,
             message:input,
-            imageUrl: '',
+            photoUrl: user.photoUrl || '',
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         setInput('')
@@ -66,13 +68,13 @@ function Feed() {
 
             {/* post */}
             {
-                posts.map(({id, data:{name, description, message, imageUrl}})=>(
+                posts.map(({id, data:{name, description, message, photoUrl}})=>(
                     <Post 
                     key={id}
                     name={name}
                     description={description}
                     message={message}
-                    imageUrl={imageUrl}
+                    photoUrl={photoUrl}
                     />
     ))
             }
