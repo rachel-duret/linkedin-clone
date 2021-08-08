@@ -8,6 +8,7 @@ import Feed from './components/feed/Feed';
 import Login from './pages/Login'
 import { useDispatch } from 'react-redux';
 import { auth } from './firebase';
+import Widgets from './components/widgets/Widgets';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Sidebar />
           <Feed />
         {/* widgets */}
+        <Widgets />
         </div>
 
       )}
